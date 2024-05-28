@@ -512,7 +512,6 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
                         Log.d(TAG,"玩家由跳跃状态变为跑步状态");
                         if (player.getState() == Player.PLAYER_STATE_JUMP)
                             player.setState(Player.PLAYER_STATE_RUN);
-
                     }
                 }
 
@@ -550,7 +549,12 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback{
                 if (!isSaved){//保存数据
                     writeData();
                     isSaved = true;
-                    readData();
+                    Map<String, Integer> map = readData();
+                    if (map != null){
+                        player.setLevel(map.get("level"));
+                        totalScore = map.get("totalScore");
+                        Log.d(TAG,"读取数据,level:"+ map.get("level") +",totalScore:"+ map.get("totalScore"));
+                    }
                 }
                 break;
             case GameProperty.GAME_LOSE:
